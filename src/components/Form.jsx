@@ -117,6 +117,5 @@ Form.propTypes = {
   isSaveButtonDisabled: PropTypes.bool,
   onInputChange: PropTypes.func,
   onSaveButtonClick: PropTypes.func,
-
 }.isRequired;
 export default Form;
