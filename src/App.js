@@ -15,12 +15,36 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
   };
 
+  validaTion = () => {
+    const { cardName,
+      cardImage,
+      cardDescription,
+      cardRare, cardAttr1,
+      cardAttr2, cardAttr3 } = this.state;
+    const card = 90;
+    const num = 210;
+    const sum = (Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3) <= num);
+    const validaTionName = cardName !== '';
+    const validaTionDEs = cardDescription !== '';
+    const validaTionImg = cardImage !== '';
+    const validaTionRaridade = cardRare !== '';
+    const valueAttr1 = Number(cardAttr1) <= card && Number(cardAttr1) >= 0;
+    const valueAttr2 = Number(cardAttr2) <= card && Number(cardAttr2) >= 0;
+    const valueAttr3 = Number(cardAttr3) <= card && Number(cardAttr3) >= 0;
+
+    this.setState({
+      isSaveButtonDisabled: !(validaTionName && validaTionDEs
+         && validaTionImg && validaTionRaridade
+    && valueAttr1 && valueAttr2 && valueAttr3 && sum),
+    });
+  };
+
   onInputChange = ({ target }) => {
     const { value, name } = target;
     // console.log('O nome campo é', name);
     this.setState({
       [name]: value,
-    });
+    }, this.validaTion);
   };
 
   render() {
