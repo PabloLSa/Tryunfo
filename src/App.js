@@ -14,6 +14,7 @@ class App extends React.Component {
     cardTrunfo: false,
     isSaveButtonDisabled: true,
     cardeSave: [],
+    hasTrunfo: false,
   };
 
   onSaveButtonClick = (e) => {
@@ -21,10 +22,14 @@ class App extends React.Component {
     const { cardName,
       cardDescription,
       cardAttr1,
+      cardTrunfo,
       cardAttr2,
       cardAttr3,
       cardImage,
       cardRare } = this.state;
+    if (cardTrunfo === true) {
+      this.setState({ hasTrunfo: true });
+    }
     const cartaNova = { cardName,
       cardDescription,
       cardAttr1,
@@ -70,14 +75,14 @@ class App extends React.Component {
   };
 
   onInputChange = ({ target }) => {
-    const { value, name } = target;
-    // console.log('O nome campo é', name);
+    const { value, name, type, checked } = target;
     this.setState({
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }, this.validaTion);
   };
 
   render() {
+    const { cardeSave } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -87,6 +92,13 @@ class App extends React.Component {
           onSaveButtonClick={ this.onSaveButtonClick }
         />
         <Card { ...this.state } />
+        <div>
+          { cardeSave.map((carta) => (
+            <div key={ carta.cardName }>
+              <Card { ...carta } />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
