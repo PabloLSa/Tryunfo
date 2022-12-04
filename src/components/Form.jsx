@@ -18,15 +18,18 @@ class Form extends React.Component {
       onSaveButtonClick,
     } = this.props;
     return (
-      <div>
-        <input
-          type="text"
-          name="cardName"
-          id=""
-          data-testid="name-input"
-          value={ cardName }
-          onChange={ onInputChange }
-        />
+      <form>
+        <label htmlFor="cardName">
+          Nome da carta
+          <input
+            type="text"
+            name="cardName"
+            id="cardName"
+            data-testid="name-input"
+            value={ cardName }
+            onChange={ onInputChange }
+          />
+        </label>
         <input
           type="textarea"
           name="cardDescription"
@@ -45,7 +48,7 @@ class Form extends React.Component {
         />
         <input
           type="number"
-          name="cardAttr2 "
+          name="cardAttr2"
           id=""
           data-testid="attr2-input"
           value={ cardAttr2 }
@@ -75,17 +78,19 @@ class Form extends React.Component {
           onChange={ onInputChange }
         >
           <option value="normal">normal</option>
-          <option value="raro">normal</option>
-          <option value="muito raro">normal</option>
+          <option value="raro">raro</option>
+          <option value="muito raro">muito raro</option>
         </select>
-        <input
-          type="checkbox"
-          name="cardTrunfo"
-          id=""
-          data-testid="trunfo-input"
-          checked={ cardTrunfo }
-          onChange={ onInputChange }
-        />
+        <label htmlFor="cardTrunfo">
+          <input
+            type="checkbox"
+            name="cardTrunfo"
+            id="cardTrunfo"
+            data-testid="trunfo-input"
+            checked={ cardTrunfo }
+            onChange={ onInputChange }
+          />
+        </label>
         <button
           type="button"
           data-testid="save-button"
@@ -95,8 +100,7 @@ class Form extends React.Component {
           Salvar
 
         </button>
-
-      </div>
+      </form>
     );
   }
 }
