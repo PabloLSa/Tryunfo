@@ -81,6 +81,15 @@ class App extends React.Component {
     }, this.validaTion);
   };
 
+  onRemove = ({ target }) => {
+    const { cardeSave } = this.state;
+    cardeSave.splice([target.name], 1);
+    this.setState({
+      cardeSave: [...cardeSave],
+      hasTrunfo: false,
+    });
+  };
+
   render() {
     const { cardeSave } = this.state;
     return (
@@ -96,6 +105,14 @@ class App extends React.Component {
           { cardeSave.map((carta) => (
             <div key={ carta.cardName }>
               <Card { ...carta } />
+              <button
+                data-testid="delete-button"
+                type="button"
+                onClick={ this.onRemove }
+              >
+                Excluir
+
+              </button>
             </div>
           ))}
         </div>
