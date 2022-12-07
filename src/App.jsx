@@ -15,6 +15,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     cardeSave: [],
     hasTrunfo: false,
+    filterCard: '',
   };
 
   onSaveButtonClick = (e) => {
@@ -48,6 +49,14 @@ class App extends React.Component {
       cardImage: '',
       cardRare: '',
     }));
+  };
+
+  onFilter = ({ target }) => {
+    const { value } = target;
+
+    this.setState({
+      filterCard: value,
+    });
   };
 
   validaTion = () => {
@@ -91,10 +100,15 @@ class App extends React.Component {
   };
 
   render() {
-    const { cardeSave } = this.state;
+    const { cardeSave, filterCard } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ this.onFilter }
+        />
         <Form
           { ...this.state }
           onInputChange={ this.onInputChange }
@@ -102,19 +116,20 @@ class App extends React.Component {
         />
         <Card { ...this.state } />
         <div>
-          { cardeSave.map((carta) => (
-            <div key={ carta.cardName }>
-              <Card { ...carta } />
-              <button
-                data-testid="delete-button"
-                type="button"
-                onClick={ this.onRemove }
-              >
-                Excluir
+          { cardeSave.filter((carta) => carta.cardName.includes(filterCard))
+            .map((carta) => (
+              <div key={ carta.cardName }>
+                <Card { ...carta } />
+                <button
+                  data-testid="delete-button"
+                  type="button"
+                  onClick={ this.onRemove }
+                >
+                  Excluir
 
-              </button>
-            </div>
-          ))}
+                </button>
+              </div>
+            ))}
         </div>
       </div>
     );
