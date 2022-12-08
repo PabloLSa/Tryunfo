@@ -30,7 +30,7 @@ class App extends React.Component {
       cardImage,
       cardRare } = this.state;
     if (cardTrunfo === true) {
-      this.setState({ hasTrunfo: true });
+      this.setState({ cardTrunfo: false, hasTrunfo: true });
     }
     const cartaNova = { cardName,
       cardDescription,
@@ -38,6 +38,7 @@ class App extends React.Component {
       cardAttr2,
       cardAttr3,
       cardImage,
+      cardTrunfo,
       cardRare };
 
     this.setState(({ cardeSave }) => ({
@@ -50,7 +51,16 @@ class App extends React.Component {
       cardImage: '',
       cardRare: '',
       cardType: 'todas',
+      trunfoHas: false,
     }));
+  };
+
+  onInputHasTrunfo = ({ target }) => {
+    const { checked } = target;
+
+    this.setState({
+      trunfoHas: checked,
+    });
   };
 
   typeCard = ({ target }) => {
@@ -85,7 +95,6 @@ class App extends React.Component {
     const valueAttr1 = Number(cardAttr1) <= card && Number(cardAttr1) >= 0;
     const valueAttr2 = Number(cardAttr2) <= card && Number(cardAttr2) >= 0;
     const valueAttr3 = Number(cardAttr3) <= card && Number(cardAttr3) >= 0;
-
     this.setState({
       isSaveButtonDisabled: !(validaTionName && validaTionDEs
          && validaTionImg && validaTionRaridade
@@ -105,12 +114,13 @@ class App extends React.Component {
     cardeSave.splice([target.name], 1);
     this.setState({
       cardeSave: [...cardeSave],
+      cardTrunfo: false,
       hasTrunfo: false,
     });
   };
 
   render() {
-    const { cardeSave, filterCard, cardType } = this.state;
+    const { cardeSave, filterCard, cardType, trunfoHas } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -118,14 +128,24 @@ class App extends React.Component {
           type="text"
           data-testid="name-filter"
           onChange={ this.onFilter }
+          disabled={ trunfoHas }
         />
         <label htmlFor="filter-rare" onChange={ this.typeCard }>
-          <select data-testid="rare-filter" name="filter-rare">
+          <select data-testid="rare-filter" name="filter-rare" disabled={ trunfoHas }>
             <option value="normal">normal</option>
             <option value="raro">raro</option>
             <option value="muito raro">muito raro</option>
             <option value="todas">todas</option>
           </select>
+        </label>
+        <label htmlFor="filter-trunfo">
+          <input
+            type="checkbox"
+            name="filter-trunfo"
+            id=""
+            data-testid="trunfo-filter"
+            onChange={ this.onInputHasTrunfo }
+          />
         </label>
 
         <Form
@@ -139,6 +159,7 @@ class App extends React.Component {
             .includes(filterCard))
             .filter((carta) => (cardType === 'todas'
               ? carta : carta.cardRare === cardType))
+            .filter((carta) => (trunfoHas ? carta.cardTrunfo : carta))
             .map((carta) => (
               <div key={ carta.cardName }>
                 <Card { ...carta } />
