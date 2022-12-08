@@ -16,6 +16,7 @@ class App extends React.Component {
     cardeSave: [],
     hasTrunfo: false,
     filterCard: '',
+    cardType: 'todas',
   };
 
   onSaveButtonClick = (e) => {
@@ -48,7 +49,16 @@ class App extends React.Component {
       cardAttr3: '0',
       cardImage: '',
       cardRare: '',
+      cardType: 'todas',
     }));
+  };
+
+  typeCard = ({ target }) => {
+    const { value } = target;
+
+    this.setState({
+      cardType: value,
+    });
   };
 
   onFilter = ({ target }) => {
@@ -100,7 +110,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { cardeSave, filterCard } = this.state;
+    const { cardeSave, filterCard, cardType } = this.state;
     return (
       <div>
         <h1>Tryunfo</h1>
@@ -109,6 +119,15 @@ class App extends React.Component {
           data-testid="name-filter"
           onChange={ this.onFilter }
         />
+        <label htmlFor="filter-rare" onChange={ this.typeCard }>
+          <select data-testid="rare-filter" name="filter-rare">
+            <option value="normal">normal</option>
+            <option value="raro">raro</option>
+            <option value="muito raro">muito raro</option>
+            <option value="todas">todas</option>
+          </select>
+        </label>
+
         <Form
           { ...this.state }
           onInputChange={ this.onInputChange }
@@ -116,7 +135,10 @@ class App extends React.Component {
         />
         <Card { ...this.state } />
         <div>
-          { cardeSave.filter((carta) => carta.cardName.includes(filterCard))
+          { cardeSave.filter((carta) => carta.cardName
+            .includes(filterCard))
+            .filter((carta) => (cardType === 'todas'
+              ? carta : carta.cardRare === cardType))
             .map((carta) => (
               <div key={ carta.cardName }>
                 <Card { ...carta } />
