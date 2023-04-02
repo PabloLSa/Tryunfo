@@ -1,10 +1,5 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Tryunfo
+Desenvolvi um conceito fundamental de React que permite que aplicações sejam dinâmicas e responsivas: estado de um componente. Além disso, aprendi gerenciar o estado e integrá-lo com capturas de eventos e formulários.
+Usei também neste projeto o incíco de aprendizado de Props Vs State 
+
+A aplicação é um jogo no estilo Super Trunfo, em que é possível criar novas cartas e listar as cartas já existentes no baralho. Tudo isso de forma dinâmica, usando formulários e o estado da aplicação!!
